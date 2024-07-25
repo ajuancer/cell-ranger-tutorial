@@ -1,6 +1,8 @@
 # Installation guide and first steps
 Based on [official tutorial](https://www.10xgenomics.com/support/software/cell-ranger/latest/tutorials/cr-tutorial-in)
 
+Also check [Hercules doc](https://www.cica.es/wp-content/uploads/2024/06/Manual-de-usuario-Cl%C3%BAster-Hercules-CICA.pdf)
+
 ## Installation
 ### Download and unpack
 1. Create yard/apps di
