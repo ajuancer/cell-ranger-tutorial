@@ -39,7 +39,7 @@ cd data
 # Download files in the urls.txt file
 # -n 2 and -P 4 to speed up the process
 cat urls.txt
-cat ../urls.txt | xargs -n 1 -P 4 wget -O
+cat ../urls.txt | xargs -n 2 -P 4 curl -o
 
 # Extract and delete compressed files
 for file in *.tar.gz; do
@@ -72,13 +72,8 @@ cellranger count --id=irradiated \
                   --fastqs=./data/irradiated/indepth_C07_MissingLibrary_1_HL5G3BBXX,./data/irradiated/indepth_C07_MissingLibrary_1_HNNWNBBXX
 mv outs irradiated_outs                 # view note 1
 
-# note 1: it is not specified default outs dir in the documentation
-# this also justifies the following lines:
+# note 1: outs dir not specified in documentation
 ls . -print > files_after_count.txt
-# this line saves current files at example dir before moving for debugging porpuses:
-# if the dir "outs" didn't exist it will not be listed and no error would appear trying to
-# move "./data/normal/outs" to the "normal_outs" dir
-# if not, it will be listed and the error appear in the next lines
 mv ./data/normal/outs normal_outs
 mv ./data/irradiated/outs irradiated_outs
 
