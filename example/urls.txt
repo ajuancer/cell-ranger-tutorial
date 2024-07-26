@@ -1,0 +1,2 @@
+https://sra-pub-src-1.s3.amazonaws.com/SRR7611048/C07.bam.1
+https://cf.10xgenomics.com/supp/cell-exp/refdata-gex-GRCm39-2024-A.tar.gz
