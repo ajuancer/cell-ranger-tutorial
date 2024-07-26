@@ -1,7 +1,7 @@
 # Analyze scRNA-Seq Data From a Publication Using 10x Software
 Based on [official tutorial](https://www.10xgenomics.com/support/software/cell-ranger/latest/tutorials/cr-tutorial-gex-analysis-nature-publication)
 
-## bam files on hercules
+## 1. bam files on hercules
 ### Option A: download to computer and move via ssh
 [SRR7611046](https://trace.ncbi.nlm.nih.gov/Traces/index.html?run=SRR7611046) bam file downloadable [here](https://sra-pub-src-1.s3.amazonaws.com/SRR7611046/C05.bam.1)
 
@@ -11,7 +11,7 @@ Based on [official tutorial](https://www.10xgenomics.com/support/software/cell-r
 scp /path/to/file username@a:/path/to/destination
 ```
 
-## Option B: Download directly on hercules
+### Option B: Download directly on hercules
 1. Connect to hercules
 2. Start a interactive session
 ```
@@ -20,17 +20,29 @@ salloc --mem=16G -c 4 -t 06:00:00 -p standard srun --pty /bin/bash -i
 3. Move to the dir where you want to download the data
 4. Download using curl:
 ```
-curl https://sra-pub-src-1.s3.amazonaws.com/SRR7611046/C05.bam.1
+curl -O https://sra-pub-src-1.s3.amazonaws.com/SRR7611046/C05.bam.1
 ```
 ```
-curl https://sra-pub-src-1.s3.amazonaws.com/SRR7611048/C07.bam.1
+curl -O https://sra-pub-src-1.s3.amazonaws.com/SRR7611048/C07.bam.1
 ```
-o usand wget:
+You can download both files with the line
+```
+curl -O https://sra-pub-src-1.s3.amazonaws.com/SRR7611046/C05.bam.1 curl -O https://sra-pub-src-1.s3.amazonaws.com/SRR7611046/C05.bam.1
+```
+
+or using wget:
 ```
 wget https://sra-pub-src-1.s3.amazonaws.com/SRR7611046/C05.bam.1 && wget https://sra-pub-src-1.s3.amazonaws.com/SRR7611048/C07.bam.1
 ```
 
-## Convert BAM to FASTQ
+Using wget you can use `wget -i urls.txt`. For curl, we have the following workaround to download files in urls.txt as no parameter allows to pass a file: `xargs -n 1 curl -O < urls.txt`.
+
+**Extra: `xargs -n 1 curl -O < urls.txt`**: works the following way;
+`xargs`: reads input from urls.txt and executes the specified command for each line
+`-n 1` passes one url per curl command
+`curl -O` downloads the file and saves with original name
+
+## 2. Convert BAM to FASTQ
 1. Load the package:
 ```
 module aval
@@ -47,7 +59,7 @@ bamtofastq C05.bam.1 normal
 bamtofastq C07.bam.1 irradiated
 ```
 
-## `cellranger count`
+## 3. `cellranger count`
 1. Run the command
 ```
 cd ./normal/
@@ -66,7 +78,7 @@ cellranger count --id=irradiated \
                   --fastqs=./indepth_C07_MissingLibrary_1_HL5G3BBXX,./indepth_C07_MissingLibrary_1_HNNWNBBXX
 ```
 
-## Copy the results
+## 4. Copy the results
 Results are saved in the `out` dir. 
 1. Compress the dir
 ```
