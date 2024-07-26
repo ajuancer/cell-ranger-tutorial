@@ -8,9 +8,9 @@
 
 # Parameters for allocating resources
 #SBATCH --workdir=/path/to/your/dir     # CHANGE THIS!!!!
-#SBATCH --cpus-per-task=4               # same as -c
-#SBATCH --mem=16G
-#SBATCH --time=01:00:00
+#SBATCH --cpus-per-task=8               # same as -c
+#SBATCH --mem=64G
+#SBATCH --time=48:00:00
 #SBATCH --partition standard            # same as -p
 
 # Other job parameters
