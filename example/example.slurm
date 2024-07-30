@@ -7,9 +7,9 @@
 ##################################
 
 # Parameters for allocating resources
-#SBATCH --workdir=/path/to/your/dir     # CHANGE THIS!!!!
-#SBATCH --cpus-per-task=8               # same as -c
-#SBATCH --mem=64G
+#SBATCH --chdir=/path/to/your/dir     # CHANGE THIS!!!!
+#SBATCH --cpus-per-task=16              # same as -c
+#SBATCH --mem=128G
 #SBATCH --time=48:00:00
 #SBATCH --partition standard            # same as -p
 
@@ -31,15 +31,15 @@ echo "Memory per CPU: ${SLURM_MEM_PER_CPU}"
 echo "Job Partition: ${SLURM_JOB_PARTITION}"
 echo "Script started at: $(date)"
 
-#### [1/n] Prepare the data
-echo "[1/n] Prepare the data"
+#### [1/5] Prepare the data
+echo "[1/5] Prepare the data"
 mkdir -p data
 cd data
 
 # Download files in the urls.txt file
 # -n 2 and -P 4 to speed up the process
-cat urls.txt
-cat ../urls.txt | xargs -n 2 -P 4 curl -o
+cat ../urls.txt
+xargs -n 2 -P 4 curl -O < ../urls.txt
 
 # Extract and delete compressed files
 for file in *.tar.gz; do
@@ -48,19 +48,18 @@ for file in *.tar.gz; do
     rm "$file"
 done
 
-#### [2/n] Load required packages
-echo "[2/n] Load required packages"
-module load CellRanger                  # CHANGE THIS!!!!
+#### [2/5] Load required packages
+echo "[2/5] Load required packages"
+module load CellRanger/7.2.0
 
-
-#### [3/n] Convert BAM to FASTQ
-echo "[3/n] Convert BAM to FASTQ"
-bamtofastq C05.bam.1 normal
-bamtofastq C07.bam.1 irradiated
+#### [3/5] Convert BAM to FASTQ
+echo "[3/5] Convert BAM to FASTQ"
+cellranger bamtofastq C05.bam.1 normal
+cellranger bamtofastq C07.bam.1 irradiated
 # we should optimize removing prev file
 
-#### [4/n] Run the study
-echo "[4/n] Run the study"
+#### [4/5] Run the study
+echo "[4/5] Run the study"
 cd ..
 cellranger count --id=normal \
                   --transcriptome=./data/refdata-gex-GRCm39-2024-A \
@@ -86,14 +85,14 @@ cellranger aggr --id=aggr --csv=libraries.csv
 # debugging porpuses
 ls . -print > files_after_aggr.txt
 
-#### [5/n] Compress files
-echo "[5/n] Compress files"
+#### [5/5] Compress files
+echo "[5/5] Compress files"
 tar czvf example-results.tar.gz . --exclude=data
 
 # Results should be available at example-results.tar.gz
 
 ##################################
-# START OF SCRIPT TO RUN
+# END OF SCRIPT TO RUN
 ##################################
 
 
