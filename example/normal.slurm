@@ -58,7 +58,7 @@ cellranger count --id=normal \
 echo "cellranger count: irradiated mouse"
 cd ../irradiated
 cellranger count --id=irradiated \
-                  --transcriptome=../data/refdata-gex-GRCm39-2024-A \
+                  --transcriptome=../refdata-gex-GRCm39-2024-A \
                   --fastqs=./indepth_C07_MissingLibrary_1_HL5G3BBXX,./indepth_C07_MissingLibrary_1_HNNWNBBXX
 
 echo "moving outs dirs"
