@@ -14,8 +14,8 @@
 #SBATCH --partition standard            # same as -p
 
 # Other job parameters
-#SBATCH --job-name=example-run
-#SBATCH --output=example-run-%j.out     # %j placeholder is replaced with job id
+#SBATCH --job-name=normal-mouse-run
+#SBATCH --output=normal-mouse-run-%j.out     # %j placeholder is replaced with job id
 
 
 ##################################
