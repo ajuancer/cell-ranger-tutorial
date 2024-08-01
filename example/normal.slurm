@@ -35,7 +35,7 @@ echo "Script started at: $(date)"
 cd data
 rm -rf normal
 rm -rf C05.bam.1
-curl -O -C - --parallel --parallel-max 5 https://sra-pub-a.uts.com/C05.bam.1
+curl -O -C - --parallel --parallel-max 5 https://sra-pub-src-1.s3.amazonaws.com/SRR7611046/C05.bam.1
 
 #### [2/5] Load required packages
 echo "[2/5] Load required packages"
